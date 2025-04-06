@@ -1,4 +1,4 @@
-# OpenID Connect Setup Guide
+# Application Setup Guide
 
 - Docker must be installed
 
