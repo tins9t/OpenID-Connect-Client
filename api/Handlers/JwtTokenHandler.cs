@@ -46,14 +46,4 @@ public class JwtTokenHandler
             return false;
         }
     }
-
-    private static byte[] Base64UrlDecode(string input)
-    {
-        string base64 = input.Replace('-', '+').Replace('_', '/');
-        while (base64.Length % 4 != 0)
-        {
-            base64 += "=";
-        }
-        return Convert.FromBase64String(base64);
-    }
 }
