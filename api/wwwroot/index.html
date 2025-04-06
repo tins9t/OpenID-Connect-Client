@@ -1,0 +1,30 @@
+﻿<html lang="en">
+<head>
+    <title>Home</title>
+</head>
+<body>
+<h1>Welcome, <span id="user-name"></span>!</h1>
+
+<script>
+    const token = sessionStorage.getItem('accessToken');
+    if (token) {
+        const parsedUserInfo = JSON.parse(atob(token.split('.')[1])); 
+        document.getElementById('user-name').textContent = parsedUserInfo.preferred_username || "Guest";
+    } else {
+        fetch('/auth/whoami')
+            .then(response => response.text())  
+            .then(accessToken => {
+                if (accessToken) {
+                    sessionStorage.setItem('accessToken', accessToken);
+                    const parsedUserInfo = JSON.parse(atob(accessToken.split('.')[1]));
+                    document.getElementById('user-name').textContent = parsedUserInfo.preferred_username || "Guest";
+                }
+            })
+            .catch(error => {
+                console.error("Error during whoami call:", error);
+                document.getElementById('user-name').textContent = "Guest";
+            });
+    }
+</script>
+</body>
+</html>
